@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Plugin-Dependencies: jquery3-api:3.4.1-10,credentials:2.3.5,workflow-a
+ pi:2.40,authentication-tokens:1.4,job-dsl:1.77;resolution:=optional,c
+ redentials:2.3.5;resolution:=optional,plain-credentials:1.7;resolutio
+ n:=optional
+Long-Name: Banco Santander - Groovy Tasks Scheduler
+Group-Id: org.jenkins-ci.plugins
+Minimum-Java-Version: 1.8
+Plugin-Version: 1.0.7
+Jenkins-Version: 2.204.4
+Url: https://github.com/jenkinsci/groovy-task-scheduler-plugin
+PluginFirstClassLoader: true
+Short-Name: groovy-task-scheduler-plugin
+Plugin-Developers: Diego Campos:dcampos:diego.campos@tsoftlatam.com
+Extension-Name: groovy-task-scheduler-plugin
+Mask-Classes: groovy.grape
+

@@ -1,0 +1,16 @@
+Lanzada por el usuario [8mha:////4AQXSJR6pb/6R1zby5SMiQU+Ki15TYrOljC5C03HWMmKAAAAmR+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAyeEgZe/dLi1CL9lOTE3IL8YgAvWxn9wgAAAA==[0mDiego Campos
+Running in Durability level: MAX_SURVIVABILITY
+java.lang.ClassNotFoundException: org.kohsuke.groovy.sandbox.GroovyInterceptor
+	at jenkins.util.AntClassLoader.findClassInComponents(AntClassLoader.java:1383)
+	at jenkins.util.AntClassLoader.findClass(AntClassLoader.java:1336)
+	at jenkins.util.AntClassLoader.loadClass(AntClassLoader.java:1083)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:357)
+Caused: java.lang.NoClassDefFoundError: org/kohsuke/groovy/sandbox/GroovyInterceptor
+	at org.jenkinsci.plugins.workflow.cps.CpsGroovyShellFactory.makeClassLoader(CpsGroovyShellFactory.java:114)
+	at org.jenkinsci.plugins.workflow.cps.CpsGroovyShellFactory.build(CpsGroovyShellFactory.java:120)
+	at org.jenkinsci.plugins.workflow.cps.CpsFlowExecution.parseScript(CpsFlowExecution.java:558)
+	at org.jenkinsci.plugins.workflow.cps.CpsFlowExecution.start(CpsFlowExecution.java:522)
+	at org.jenkinsci.plugins.workflow.job.WorkflowRun.run(WorkflowRun.java:337)
+	at hudson.model.ResourceController.execute(ResourceController.java:97)
+	at hudson.model.Executor.run(Executor.java:427)
+Finished: FAILURE

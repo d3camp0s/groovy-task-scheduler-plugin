@@ -1,0 +1,9 @@
+name: runDeleteWorkspace
+trigger:
+  event: JOB_STARTED
+  active: false
+script: deleteWorkspace.groovy
+description: Borra el workspace de los nodos conectados a jenkins
+variables:
+  USER: dcampos
+  PASS: 000000

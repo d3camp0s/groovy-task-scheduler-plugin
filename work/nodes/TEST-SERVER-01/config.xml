@@ -1,0 +1,18 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<slave>
+  <name>TEST-SERVER-01</name>
+  <description>test 1</description>
+  <remoteFS>/software/test01</remoteFS>
+  <numExecutors>1</numExecutors>
+  <mode>NORMAL</mode>
+  <retentionStrategy class="hudson.slaves.RetentionStrategy$Always"/>
+  <launcher class="hudson.slaves.JNLPLauncher">
+    <workDirSettings>
+      <disabled>false</disabled>
+      <internalDir>remoting</internalDir>
+      <failIfWorkDirIsMissing>false</failIfWorkDirIsMissing>
+    </workDirSettings>
+  </launcher>
+  <label>test</label>
+  <nodeProperties/>
+</slave>

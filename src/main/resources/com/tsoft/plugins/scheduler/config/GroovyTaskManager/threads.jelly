@@ -1,0 +1,53 @@
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define"
+          xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form" xmlns:local="local">
+
+    <j:set var="descriptorPath" value="${rootURL}/descriptor/${it.descriptor.clazz.name}"/>
+    <l:layout title="${%Hilos en ejecucion}" norefresh="true" permission="${app.ADMINISTER}">
+
+        <st:include page="sidepanel_manage.jelly"/>
+        <l:main-panel>
+            <style>
+                table#task_threads_table { width: 95%; }
+                table#task_threads_table, TD, TH {
+                    border-collapse: collapse;
+                    border-spacing: 0;
+                    border: 1px solid #D3D7CF;
+                }
+                table#task_threads_table TR {
+                    border-collapse: collapse;
+                    border-spacing: 0;
+                }
+            </style>
+            <j:set var="allthreads" value="${it.getAllThreads()}"/>
+
+            <f:section title="Informacion de Hilos en ejecucion">
+               (<a href='../admin-scripts'>${%volver}</a>)
+               <table id="task_threads_table" class="groovy-tasks-scripts-table" name="threads">
+                  <thead>
+                      <tr class="group-row">
+                         <th class="pane-header"></th>
+                         <th class="pane-header">Id</th>
+                         <th class="pane-header">Name</th>
+                         <th class="pane-header">Priority</th>
+                         <th class="pane-header">State</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <j:forEach var="th" items="${allthreads}" varStatus="eloop">
+                         <tr>
+                            <td><l:stopButton href="${descriptorPath}/interrupt?id=${th.id}" confirm="Interrupt thread ${th.id}?" alt="${%interrupt this thread?}"/></td>
+                            <td>${th.id}</td>
+                            <td>${th.name}</td>
+                            <td>${th.priority}</td>
+                            <td>${th.state}</td>
+                         </tr>
+                      </j:forEach>
+                  </tbody>
+               </table>
+            </f:section>
+
+        </l:main-panel>
+    </l:layout>
+
+</j:jelly>

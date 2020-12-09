@@ -1,0 +1,240 @@
+
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout"
+         xmlns:t="/lib/hudson" xmlns:f="/lib/form" >
+
+    <j:set var="descriptorPath" value="${rootURL}/descriptor/${it.descriptor.clazz.name}"/>
+
+    <l:layout permission="${app.ADMINISTER}" xmlns:local="local" norefresh="true">
+        <st:include page="sidepanel_manage.jelly" />
+        <st:adjunct includes="io.jenkins.plugins.jquery3"/>
+
+        <l:main-panel>
+            <link rel="stylesheet" href="${rootURL}/plugin/groovy-task-scheduler-plugin/css/table_task_manager.css" type="text/css" />
+            <script type="text/javascript" src="${rootURL}/plugin/groovy-task-scheduler-plugin/js/table.js" />
+            <script type="text/javascript" src="${rootURL}/plugin/groovy-task-scheduler-plugin/js/create_task_dialogs.js" />
+            <script type="text/javascript" src="${rootURL}/scripts/yui/resize/resize-min.js"></script>
+
+            <!-- tags personalizados -->
+            <d:taglib uri="local">
+                <d:tag name="gtaskRow">
+                    <td class="stop slc">
+                        <a href="#" onclick="YAHOO.taskManager.delete.on('${script.id}','${script.name}'); return false;">
+                            <img alt="remove" src="${imagesURL}/16x16/stop.gif"/>
+                        </a>
+                    </td>
+                    <td class="center-most slc ${script.isValid()? 'active':'failure'}">${script.isValid()}</td>
+                    <td class="slc spacing3" colspan="2">${script.name}</td>
+                    <td class="center-most slc">${script.triggerSpec}</td>
+                    <td class="center-most slc ${script.ymld.trigger.active? 'active':'failure'}">${script.isScriptActive()? 'Si':'No'}</td>
+                    <td class="center-most slc spacing3">${script.lastExecution}</td>
+                    <td class="slc" style="margin-left: 3px;" title="${script.description}">${script.getShortDescription()}</td>
+                    <td class="center-most">
+                        <j:if test="${ script.triggerSpec=='cron' || script.triggerSpec=='manual' }">
+                            <j:if test="${ script.isScriptActive() }" >
+                                <a id="btn_${script.id}" href="#" onclick="YAHOO.taskManager.task.execute(${script.id}); return false;">
+                                  <img alt="Ejecutar?" src="${imagesURL}/16x16/clock.gif"/>
+                                </a>
+                            </j:if>
+                        </j:if>
+                    </td>
+                    <td class="center-most">
+                        <j:if test="${script.logfile!=null}">
+                            <a id="log_${script.id}" href="#" onclick="YAHOO.taskManager.log.get('${script.id}'); return false;">
+                                <img alt="log" src="${imagesURL}/16x16/notepad.gif"/>
+                            </a>
+                        </j:if>
+                    </td>
+                </d:tag>
+
+                <d:tag name="gbtn">
+                    <span id="${id}" class="yui-button yui-push-button">
+                        <span class="first-child">
+                            <input type="button" name="${name}" value="${value}" />
+                        </span>
+                    </span>
+                    <input type="hidden" id="${id}_${name}" value="" />
+                </d:tag>
+            </d:taglib>
+
+            <f:section title="Groovy Tasks Scheduler Plugin">
+
+                <!-- Variables de construccion de la tabla de tareas -->
+                <j:set var="alltasks" value="${it.getAllTasks()}"/>
+                <j:set var="groupedtasks" value="${it.getGroupedTasks()}"/>
+                <j:set var="allthreads" value="${it.getAllThreads()}"/>
+
+                <div id="tableTopButtons">
+                    <div class="tableLeftElement">
+                        <local:gbtn id="add_script" name="addbtn" value="Add" />
+                    </div>
+                    <div class="tableRightElement">
+                        <span style="font-weight: bold;">Threads:</span>
+                        <a href="threads">${allthreads.size()}</a>
+                    </div>
+                </div>
+                <br/>
+                <table id="groovy_tasks_scripts" class="center-align groovy-tasks-scripts-table table-md" name="data">
+                    <thead>
+                        <th class="pane-header blank"></th>
+                        <th class="pane-header blank">${%Cargado}</th>
+                        <th class="pane-header blank" colspan="2">${%Nombre}</th>
+                        <th class="pane-header blank">${%Trigger}</th>
+                        <th class="pane-header blank">${%Activo}</th>
+                        <th class="pane-header blank">${%Ultima Ejecucion}</th>
+                        <th class="pane-header blank">${%Descripcion}</th>
+                        <th class="stop pane-header">${%Ejecutar?}</th>
+                        <th class="stop pane-header">${%log}</th>
+                    </thead>
+                    <tbody>
+                        <j:forEach var="t" items="${groupedtasks}">
+                            <tr name="g_${t.key.hashCode()}" class="header-group-script">
+                                <th class="groupRow pane-header" colspan="10">
+                                    <a href="#" class="${t.key == '*' ? 'menu_down_arrow menu_up_arrow' : 'menu_down_arrow'}"></a>
+                                    ${t.key}
+                                </th>
+                            </tr>
+                            <j:forEach var="sp" items="${t.value}">
+                                <tr name="${sp.id}" class="permission-row g_${t.key.hashCode()} ${t.key == '*' ? '' : 'hide'}">
+                                    <local:gtaskRow id="${sp.id}" script="${sp}"/>
+                                </tr>
+                            </j:forEach>
+                        </j:forEach>
+                    </tbody>
+                </table>
+
+                <br/>
+                <br/>
+                <f:invisibleEntry>
+                    <div id="notificacion" class="hide alert alert-danger fade in alert-dismissible">
+                        <strong>ERROR: </strong> <span id="error_msg"></span>
+                    </div>
+                </f:invisibleEntry>
+                <f:entry
+                    title="${%Yaml Config / Groovy Code}"
+                    description="This Groovy code is executed without sandbox.">
+
+                    <table style="width: 100%; table-layout: fixed;">
+                        <tr>
+                            <td style="max-width: 40%">
+                                <f:textarea
+                                    id="yamlCodeId"
+                                    field="scriptYmlConfig"
+                                    default=""
+                                    codemirror-mode="yaml"
+                                    codemirror-config="mode: 'text/x-yaml',
+                                    lineNumbers: true,
+                                    matchBrackets: true,
+                                    onChange: function(editor){editor.save()}"/>
+                            </td>
+                            <td style="max-width: 60%">
+                                <div class="parent-wrapper">
+                                    <div class="parent">
+                                      <div class="child">
+                                        <local:gbtn id="run_script" name="runbtn" value="Ejecutar" />
+                                      </div>
+                                      <div class="child">
+                                        <local:gbtn id="log_script" name="logbtn" value="Ver Log" />
+                                      </div>
+                                      <div class="child">
+                                        <local:gbtn id="save_script" name="savebtn" value="Guardar" />
+                                      </div>
+                                    </div>
+                                  </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <f:textarea
+                                    id="scriptCodeId"
+                                    field="scriptCode"
+                                    default=""
+                                    codemirror-mode="groovy"
+                                    codemirror-config="mode: 'text/x-groovy',
+                                    lineNumbers: true,
+                                    matchBrackets: true,
+                                    viewportMargin: Infinity,
+                                    onChange: function(editor){editor.save()}"/>
+                            </td>
+                        </tr>
+                        <f:invisibleEntry>
+                            <f:readOnlyTextbox id="scriptId" field="scriptId"/>
+                            <div id="log"></div>
+                        </f:invisibleEntry>
+                    </table>
+                </f:entry>
+            </f:section>
+        </l:main-panel>
+    </l:layout>
+
+    <script>
+        Event.observe(window, 'load', function(event) {
+              var table = document.getElementById('groovy_tasks_scripts');
+              resizableGrid(table);
+
+              var rows = jQuery3('#groovy_tasks_scripts tbody tr');
+              var scriptid = jQuery3('#scriptId');
+              var yamlTextArea = jQuery3('#yamlCodeId')[0].codemirrorObject
+              var scriptTextArea = jQuery3('#scriptCodeId')[0].codemirrorObject
+
+              // Nuevos 3 botones
+              var btnrun = jQuery3('#run_script_runbtn')[0];
+              var btnlog = jQuery3('#log_script_logbtn')[0];
+
+              if(!rows[0]){
+                  console.log("No se encontraron filas en tabla");
+              }else {
+                  jQuery3('#groovy_tasks_scripts tbody').on('click', 'tr', function(row) {
+                      if(row.target.classList.contains('slc')){
+                          rows.removeClass('highlighted');
+                          row.currentTarget.toggleClassName('highlighted');
+                          // Asigna id a btns
+                          btnrun.value = row.currentTarget.getAttribute("name");
+                          btnlog.value = row.currentTarget.getAttribute("name");
+
+                          // carga async de archivos
+                          FormChecker.sendRequest("${descriptorPath}/getScriptPreview?value="+encodeURIComponent(row.currentTarget.getAttribute("name")), {
+                              method : "post",
+                              onComplete : function(rsp) {
+                                  if(rsp.status==200){
+                                      yamlTextArea.setValue(rsp.responseJSON.yaml)
+                                      scriptTextArea.setValue(rsp.responseJSON.script)
+                                      scriptid.val(rsp.responseJSON.id);
+                                      if(rsp.responseJSON.error!="0") {
+                                         jQuery3('#error_msg').text(rsp.responseJSON.error);
+                                         jQuery3('#notificacion').removeClass('hide');
+                                         jQuery3('#notificacion').addClass('show');
+                                      }
+                                      else {
+                                         jQuery3('#error_msg').text("");
+                                         jQuery3('#notificacion').removeClass('show');
+                                         jQuery3('#notificacion').addClass('hide');
+                                      }
+                                      // Ajustar tamaño del textarea
+                                      let ss = scriptTextArea.lineCount()*14;
+                                      if( ss>200 )
+                                        scriptTextArea.setSize(null, ss>300? 300 : ss);
+                                  }
+                                  else{
+                                      notificationBar.show("Script not found!", notificationBar.ERROR);
+                                  }
+                                  layoutUpdateCallback.call();
+                              }
+                          });
+                      }
+                  });
+
+                  // click on headers
+                  jQuery3('#groovy_tasks_scripts tbody').on('click', 'th', function(row) {
+                     if(row.target.classList.contains('groupRow')){
+                        console.log(row.target.children[0].toggleClassName('menu_up_arrow'));
+                        className = row.target.parentElement.getAttribute("name");
+                        jQuery3('.'+className).toggleClass('hide');
+                        row.currentTarget.toggleClassName('resizeDown');
+                     }
+                  });
+              }
+        });
+
+    </script>
+</j:jelly>

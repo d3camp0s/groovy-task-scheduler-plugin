@@ -1,0 +1,26 @@
+<l:dependencies xmlns:l='licenses' version='1.0.7' artifactId='groovy-task-scheduler-plugin' groupId='org.jenkins-ci.plugins'>
+  <l:dependency version='1.0.7' artifactId='groovy-task-scheduler-plugin' groupId='org.jenkins-ci.plugins' name='Banco Santander - Groovy Tasks Scheduler' url='https://github.com/jenkinsci/groovy-task-scheduler-plugin'>
+    <l:description>A Jenkins plugin, which can execute a groovy script from the $JENKINS_HOME.</l:description>
+  </l:dependency>
+  <l:dependency version='3.1.0.RELEASE' artifactId='spring-context-support' groupId='org.springframework' name='' url=''>
+    <l:description></l:description>
+  </l:dependency>
+  <l:dependency version='3.1.0.RELEASE' artifactId='spring-context' groupId='org.springframework' name='' url=''>
+    <l:description></l:description>
+  </l:dependency>
+  <l:dependency version='3.1.0.RELEASE' artifactId='spring-aop' groupId='org.springframework' name='' url=''>
+    <l:description></l:description>
+  </l:dependency>
+  <l:dependency version='3.1.0.RELEASE' artifactId='spring-beans' groupId='org.springframework' name='' url=''>
+    <l:description></l:description>
+  </l:dependency>
+  <l:dependency version='3.1.0.RELEASE' artifactId='spring-expression' groupId='org.springframework' name='' url=''>
+    <l:description></l:description>
+  </l:dependency>
+  <l:dependency version='3.1.0.RELEASE' artifactId='spring-core' groupId='org.springframework' name='' url=''>
+    <l:description></l:description>
+  </l:dependency>
+  <l:dependency version='3.1.0.RELEASE' artifactId='spring-asm' groupId='org.springframework' name='' url=''>
+    <l:description></l:description>
+  </l:dependency>
+</l:dependencies>

@@ -1,0 +1,84 @@
+plugins {
+    id "org.jenkins-ci.jpi" version "0.38.0"
+    id "groovy"
+    id "idea"
+}
+
+sourceCompatibility = JavaVersion.VERSION_1_8
+
+group = pluginGroup
+version = pluginVersion
+description = pluginDescription
+
+jenkinsPlugin {
+    coreVersion = "2.204.4"
+    displayName = jenkinsDisplayName
+    url = "https://github.com/jenkinsci/$project.name"
+    gitHubUrl = "https://github.com/jenkinsci/$project.name"
+    shortName = project.name
+    fileExtension = 'hpi'
+    maskClasses = 'groovy.grape'
+    pluginFirstClassLoader = true
+    developers {
+        developer {
+            id "dcampos"
+            name "Diego Campos"
+            email "diego.campos@tsoftlatam.com"
+        }
+    }
+}
+
+repositories {
+    mavenCentral()
+    jcenter()
+    maven {
+        url 'http://repo.jenkins-ci.org/releases/'
+    }
+}
+
+dependencies {
+    compile 'org.codehaus.groovy:groovy-all:2.4.12'
+    compile 'org.springframework:spring-context-support:3.1.0.RELEASE'
+
+    jenkinsPlugins 'io.jenkins.plugins:jquery3-api:3.4.1-10@jar'
+    jenkinsPlugins 'org.jenkins-ci.plugins:credentials:2.3.5@jar'
+    jenkinsPlugins 'org.jenkins-ci.plugins.workflow:workflow-api:2.40@jar'
+    jenkinsPlugins 'org.jenkins-ci.plugins:authentication-tokens:1.4@jar'
+
+    optionalJenkinsPlugins 'org.jenkins-ci.plugins:job-dsl:1.77'
+    optionalJenkinsPlugins 'org.jenkins-ci.plugins:credentials:2.3.5'
+    optionalJenkinsPlugins 'org.jenkins-ci.plugins:plain-credentials:1.7'
+
+    implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.10.4'
+    implementation 'com.squareup.okhttp3:okhttp:4.7.2'
+    implementation 'org.apache.ivy:ivy:2.4.0'
+    implementation 'com.jcraft:jsch:0.1.55'
+    implementation 'org.eclipse.jgit:org.eclipse.jgit:5.8.1.202007141445-r'
+    implementation 'org.eclipse.jgit:org.eclipse.jgit.http.apache:5.8.1.202007141445-r'
+    implementation 'org.apache.poi:poi:4.1.2'
+    implementation 'org.apache.poi:poi-ooxml:4.1.2'
+
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = [] // don't compile Java code twice
+        }
+        groovy {
+            srcDirs = ['src/main/groovy', 'src/main/java']
+        }
+    }
+}
+
+clean {
+    delete 'build'
+    delete '.gradle'
+}
+
+
+
+wrapper {
+    gradleVersion = '5.1'
+}

@@ -1,0 +1,2 @@
+groovy.lang.MissingMethodException: No signature of method: org.jenkinsci.plugins.workflow.graph.FlowStartNode.isBody() is applicable for argument types: () values: []
+Possible solutions: isCase(java.lang.Object), is(java.lang.Object), hashCode(), notify(), getId(), hashCode()

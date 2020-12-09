@@ -1,0 +1,25 @@
+Manifest-Version: 1.0
+Archiver-Version: Plexus Archiver
+Created-By: Apache Maven
+Built-By: diego.campos
+Build-Jdk: 1.8.0_221
+Extension-Name: node-manager
+Specification-Title: Añade funciones de despliegue y metricas utiles 
+ en el nuevo flujo devops en Banco Santander.
+Implementation-Title: node-manager
+Implementation-Version: 1.0.0-SNAPSHOT
+Group-Id: io.jenkins.plugins
+Short-Name: node-manager
+Long-Name: Banco Santander - Node Manager
+Url: https://github.com/jenkinsci/redis-notifier-plugin
+Minimum-Java-Version: 1.8
+Plugin-Version: 1.0.0-SNAPSHOT (private-09/21/2020 10:44-diego.campos)
+Hudson-Version: 2.204.4
+Jenkins-Version: 2.204.4
+Plugin-Dependencies: workflow-basic-steps:2.19,workflow-cps:2.80,workf
+ low-job:2.36,workflow-step-api:2.22,structs:1.20
+Plugin-Developers: Diego Campos A.:dcampos:d_campos@hotmail.cl
+Plugin-License-Name: MIT License
+Plugin-License-Url: https://opensource.org/licenses/MIT
+Plugin-ScmUrl: https://github.com/jenkinsci/plugin-pom/node-manager
+

@@ -1,0 +1,12 @@
+---
+group: "ALGO"
+name: dowloadfile
+trigger:
+  manual: true
+  active: true
+script: downloadFile.groovy
+description: la mejor descripcion del mundo que no cae en una sola linea de este panel
+variables:
+  hola: 'mendo'
+options:
+  deleteWorkspace: false

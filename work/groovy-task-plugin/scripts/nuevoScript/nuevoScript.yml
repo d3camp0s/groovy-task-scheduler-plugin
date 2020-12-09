@@ -1,0 +1,7 @@
+---
+name: nuevoscript
+trigger:
+  event: 'Flow.onNewHead'
+  active: true
+script: nuevoScript.groovy
+description: test de flow node

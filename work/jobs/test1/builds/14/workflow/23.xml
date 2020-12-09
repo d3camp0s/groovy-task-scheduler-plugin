@@ -1,0 +1,49 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<Tag plugin="workflow-support@3.5">
+  <node class="org.jenkinsci.plugins.workflow.graph.FlowEndNode" plugin="workflow-api@2.40">
+    <parentIds>
+      <string>22</string>
+    </parentIds>
+    <id>23</id>
+    <startId>2</startId>
+    <result>
+      <name>FAILURE</name>
+      <ordinal>2</ordinal>
+      <color>RED</color>
+      <completeBuild>true</completeBuild>
+    </result>
+  </node>
+  <actions>
+    <wf.a.ErrorAction plugin="workflow-api@2.40">
+      <error class="java.io.IOException">
+        <detailMessage>cannot start writing logs to a finished node StepStartNode[id=3, exec=CpsFlowExecution[Owner[test1/14:test1 #14]]] node in CpsFlowExecution[Owner[test1/14:test1 #14]]</detailMessage>
+        <stackTrace>
+          <trace>org.jenkinsci.plugins.workflow.support.DefaultStepContext.getListener(DefaultStepContext.java:113)</trace>
+          <trace>org.jenkinsci.plugins.workflow.support.DefaultStepContext.get(DefaultStepContext.java:79)</trace>
+          <trace>org.jenkinsci.plugins.workflow.support.steps.ExecutorStepExecution.onResume(ExecutorStepExecution.java:209)</trace>
+          <trace>org.jenkinsci.plugins.workflow.flow.FlowExecutionList$ItemListenerImpl$1.onSuccess(FlowExecutionList.java:185)</trace>
+          <trace>org.jenkinsci.plugins.workflow.flow.FlowExecutionList$ItemListenerImpl$1.onSuccess(FlowExecutionList.java:180)</trace>
+          <trace>com.google.common.util.concurrent.Futures$6.run(Futures.java:975)</trace>
+          <trace>com.google.common.util.concurrent.MoreExecutors$SameThreadExecutorService.execute(MoreExecutors.java:253)</trace>
+          <trace>com.google.common.util.concurrent.ExecutionList$RunnableExecutorPair.execute(ExecutionList.java:149)</trace>
+          <trace>com.google.common.util.concurrent.ExecutionList.add(ExecutionList.java:105)</trace>
+          <trace>com.google.common.util.concurrent.AbstractFuture.addListener(AbstractFuture.java:155)</trace>
+          <trace>com.google.common.util.concurrent.Futures.addCallback(Futures.java:985)</trace>
+          <trace>com.google.common.util.concurrent.Futures.addCallback(Futures.java:915)</trace>
+          <trace>org.jenkinsci.plugins.workflow.flow.FlowExecutionList$ItemListenerImpl.onLoaded(FlowExecutionList.java:180)</trace>
+          <trace>jenkins.model.Jenkins.&lt;init&gt;(Jenkins.java:1029)</trace>
+          <trace>hudson.model.Hudson.&lt;init&gt;(Hudson.java:85)</trace>
+          <trace>hudson.model.Hudson.&lt;init&gt;(Hudson.java:81)</trace>
+          <trace>hudson.WebAppMain$3.run(WebAppMain.java:233)</trace>
+        </stackTrace>
+        <suppressedExceptions class="java.util.Collections$UnmodifiableRandomAccessList" resolves-to="java.util.Collections$UnmodifiableList">
+          <c class="list"/>
+          <list reference="../c"/>
+        </suppressedExceptions>
+      </error>
+    </wf.a.ErrorAction>
+    <wf.a.TimingAction plugin="workflow-api@2.40">
+      <startTime>1603168454896</startTime>
+    </wf.a.TimingAction>
+  </actions>
+</Tag>

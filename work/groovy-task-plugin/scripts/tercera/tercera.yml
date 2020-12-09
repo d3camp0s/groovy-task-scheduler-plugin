@@ -1,0 +1,11 @@
+---
+name: tercera
+trigger:
+  event: 'Queue.onEnterWaiting'
+  active: false
+script: tercera.groovy
+description: no description found
+variables:
+  key: 'value'
+options:
+  opt1: 'val1'

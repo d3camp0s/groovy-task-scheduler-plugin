@@ -1,0 +1,309 @@
+/*
+ * The MIT License
+ *
+ * Copyright (c) 2010-2011, Manufacture Française des Pneumatiques Michelin,
+ * Thomas Maurel, Romain Seguy
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
+.groovy-tasks-scripts-table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  border: 1px solid #D3D7CF;
+}
+
+.groovy-tasks-scripts-table TH {
+  padding: 0.2em;
+  border-bottom: 1px solid #D3D7CF;
+}
+
+.groovy-tasks-scripts-table TD.blank {
+  vertical-align: middle;
+  padding: 0.2em;
+}
+
+.groovy-tasks-scripts-table .caption-row TH {
+  font-weight: lighter;
+  padding: 0;
+}
+
+.groovy-tasks-scripts-table .caption-row TH span {
+  writing-mode: vertical-rl;
+}
+
+.groovy-tasks-scripts-table TD {
+  border: 1px solid #D3D7CF;
+}
+
+.groovy-tasks-scripts-table TD.spacing3 {
+    padding-right: 1em;
+    padding-left: 1em;
+}
+
+.groovy-tasks-scripts-table TD.left-most {
+  text-align: left;
+  border-left: none;
+  white-space: nowrap;
+}
+
+.groovy-tasks-scripts-table TD.stop {
+  white-space: nowrap;
+}
+.groovy-tasks-scripts-table TD.start {
+  border-top: 1px solid white;
+  border-left: 1px solid white;
+  border-bottom: 1px solid white;
+}
+
+.groovy-tasks-scripts-table TH.groupRow {
+  text-align: left;
+  cursor: pointer;
+}
+
+.groovy-tasks-scripts-table TH.groupRow span {
+  margin-left: 3em;
+}
+
+.groovy-tasks-scripts-table td { cursor: pointer; }
+
+.groovy-tasks-scripts-table .caption-row th, .group-row td {
+  padding: 3px;
+}
+
+.highlighted {
+  background-color: #FFF9C9;
+}
+
+.table-md {
+    width: 95%;
+    max-height: 400px;
+}
+
+.table-bg {
+    width: 100%;
+    max-height: 500px;
+}
+.table-sm {
+    width: 50%;
+    max-height: 300px;
+}
+.slc {
+    white-space: nowrap;
+}
+
+.active {
+    color: #008000;
+    font-weight: bold;
+    text-transform: capitalize;
+}
+.failure {
+    color: #FF0000;
+    font-weight: bold;
+    text-transform: capitalize
+}
+
+.dsc {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+
+#matchingJobsForPattern ul {
+  list-style: none;
+}
+
+.matchingJobsDialog {
+  top: 50vh !important;
+  left: 50vw !important;
+}
+
+.matchingJobsDialog .ui-widget-header {
+  border: 1px solid #D3D7CF;
+  background: #D3D7CF;
+  color: #000000;
+}
+
+div.auto {
+  height: auto;
+  width: auto;
+  background-color: #f2f2f2;
+}
+
+/* Imagenes y estilo de botones */
+.yui-button#add_script button {
+    padding-left: 2em;
+    background: url(/plugin/groovy-task-scheduler-plugin/images/add.gif) 10% 50% no-repeat;
+    background-color: #e0e0e0;
+}
+.yui-button#run_script button{
+    background: url(/plugin/groovy-task-scheduler-plugin/images/play.png) 10% 50% no-repeat;
+    padding-left: 2em;
+    background-color: #e0e0e0;
+    width: 70px;
+}
+.yui-button#log_script button{
+    background: url(/plugin/groovy-task-scheduler-plugin/images/notepad.png) 10% 50% no-repeat;
+    padding-left: 2em;
+    background-color: #e0e0e0;
+    width: 70px;
+}
+.yui-button#save_script button{
+    background: url(/plugin/groovy-task-scheduler-plugin/images/save.png) 10% 50% no-repeat;
+    padding-left: 2em;
+    background-color: #e0e0e0;
+    width: 70px;
+}
+
+.yui-panel-container .bd {
+    overflow: auto;
+    background-color: fff;
+    padding: 10px;
+}
+
+.yui-resize .ft {
+    height:18px;
+    padding:0;
+}
+
+.yui-skin-sam .yui-panel {
+    position: relative;
+    left: 0;
+    top: 0;
+    border-style: solid;
+    border-color: #808080;
+    z-index: 1;
+    border-width: 1px;
+}
+
+/* Alertas tipo bootsrap 4 */
+.alert-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+.alert-dismissible {
+    padding-right: 4rem;
+}
+.alert {
+    position: relative;
+    padding: .75rem 1.25rem;
+    margin-bottom: 1rem;
+    border: 1px solid transparent;
+    border-radius: .25rem;
+}
+.fade {
+    transition: opacity .15s linear;
+}
+.alert-dismissible .close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: .75rem 1.25rem;
+    color: inherit;
+}
+.close {
+    float: right;
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1;
+    color: #000;
+    text-shadow: 0 1px 0 #fff;
+    opacity: .5;
+}
+button.close {
+    padding: 0;
+    background-color: transparent;
+    border: 0;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    font: inherit;
+    margin: 0;
+}
+.show {
+    display: block;
+}
+.hide {
+    display: none;
+}
+
+/* Botones horizontales */
+.parent-wrapper {
+    height: 110px;
+    width: 50px;
+    /*border: 1px solid black;*/
+}
+.parent {
+    display: flex;
+    flex-direction: column;
+    margin: -5px 0 0 -5px;
+}
+.child {
+    display: inline;
+    margin: 5px 0 0 5px;
+    height: 32px;
+}
+
+/* CodeMirror */
+.CodeMirror {
+  border: 1px solid #eee;
+  height: auto;
+}
+
+/* Table top */
+div#tableTopButtons {
+    width: 100%;
+    padding: 0 2em 20px 0;
+}
+div#tableTopButtons .tableLeftElement {
+    float: left;
+    position: relative;
+    text-align: -webkit-left;
+}
+div#tableTopButtons .tableRightElement {
+    float: right;
+    position: relative;
+    text-align: -webkit-right;
+}
+
+.menu_down_arrow {/* used for showing 'v' on the right of the anchor */
+  background-color:transparent;
+  background-image: url(/scripts/yui/menu/assets/menu_down_arrow.png);
+  background-position: center center;
+  background-repeat: no-repeat;
+  width: 16px;
+  height:16px;
+  display: inline-block;
+  cursor: pointer;
+  z-index: 2000;
+}
+
+.menu_up_arrow {/* used for showing 'v' on the right of the anchor */
+  background-color:transparent;
+  background-image: url(/scripts/yui/menu/assets/menu_up_arrow.png);
+  background-position: center center;
+  background-repeat: no-repeat;
+  width: 16px;
+  height:16px;
+  display: inline-block;
+  cursor: pointer;
+  z-index: 2000;
+}
