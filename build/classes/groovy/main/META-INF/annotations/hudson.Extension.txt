@@ -1,8 +1,0 @@
-# informational; use java -jar sezpoz.jar to see authoritative contents
-com.tsoft.plugins.scheduler.config.GroovyTaskManager
-com.tsoft.plugins.scheduler.config.GroovyTaskManager$DescriptorImpl
-com.tsoft.plugins.scheduler.events.ComputerEventListener
-com.tsoft.plugins.scheduler.events.JobRunEventListener
-com.tsoft.plugins.scheduler.events.PipelineDeployListener
-com.tsoft.plugins.scheduler.events.QueueEventListener
-com.tsoft.plugins.scheduler.events.StageEventListener

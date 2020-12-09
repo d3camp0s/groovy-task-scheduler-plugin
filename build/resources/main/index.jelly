@@ -1,2 +1,0 @@
-<?jelly escape-by-default='true'?>
-<div>This Jenkins plugin can execute a groovy script from the $JENKINS_HOME.</div>

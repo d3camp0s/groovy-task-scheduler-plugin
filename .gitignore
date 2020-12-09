@@ -1,8 +1,8 @@
-.gradle/
-gradle/
-build/
-work/
+.gradle
+gradle
+build
+work
 
 .settings
-.idea/
+.idea
 

@@ -1,9 +1,0 @@
-name: SayHelloWorld
-trigger:
-  cron: "0 0/5 * * 1 *"
-  active: true
-script: HelloWorld.groovy
-variables:
-  USER: dcampos
-  PASS: 12345
-description: Saluda desde el nuevo plugin

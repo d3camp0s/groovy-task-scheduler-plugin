@@ -1,2 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<l:dependencies xmlns:l='licenses' groupId='io.jenkins.plugins' artifactId='node-manager' version='1.0.0-SNAPSHOT'><l:dependency name='Banco Santander - Node Manager' groupId='io.jenkins.plugins' artifactId='node-manager' version='1.0.0-SNAPSHOT' url='https://github.com/jenkinsci/redis-notifier-plugin'><l:description>Añade funciones de despliegue y metricas utiles en el nuevo flujo devops en Banco Santander.</l:description><l:license name='MIT License' url='https://opensource.org/licenses/MIT'/></l:dependency></l:dependencies>

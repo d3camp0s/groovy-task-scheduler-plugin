@@ -1,19 +1,0 @@
-true
-false
-c[{"id":0,"name":null,"status":"RUNNABLE","threadId":10,"threadName":"Test worker","latchCount":0}]
-ýYaml {name='runDeleteWorkspace', grupo='*', trigger='[event:JOB_STARTED, active:false]', script='deleteWorkspace.groovy', description='Borra el workspace de los nodos conectados a jenkins', variables='[USER:dcampos, PASS:0]', options='[autosave:false]'
-gradle : 20200509_002400
-src : 20200509_003000
-build.xml : 20200603_104500
-libs : 20200702_133100
-"settings.gradle : 20200909_005800
-gradlew : 20200924_113200
-gradlew.bat : 20200924_113200
-.DS_Store : 20201011_030400
-$gradle.properties : 20201015_151500
-.gradle : 20201020_004100
-build : 20201020_004100
-build.gradle : 20201020_015100
-work : 20201020_022100
-.idea : 20201020_022100
-ßYaml {name='SayHelloWorld', grupo='*', trigger='[cron:0 0/5 * * 1 *, active:true]', script='HelloWorld.groovy', description='Saluda desde el nuevo plugin', variables='[USER:dcampos, PASS:12345]', options='[autosave:false]'
