@@ -5,7 +5,6 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
 import org.apache.commons.lang.time.DateFormatUtils
 import groovy.json.JsonOutput
 import java.util.concurrent.ScheduledFuture
-import com.tsoft.plugins.scheduler.utils.ScriptHelper
 
 class GroovyScript implements Serializable {
 
@@ -238,6 +237,7 @@ class GroovyScript implements Serializable {
         result.yaml = yaml.text
         result.script = scriptFile.text
         result.error = (errores!=null && errores.size()>0)? errores.join("\n"):"0"
+        result.hasTemplate = ymld.template!=""
         return JsonOutput.toJson(result)
     }
 

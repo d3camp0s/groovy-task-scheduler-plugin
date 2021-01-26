@@ -7,6 +7,7 @@ class Yaml implements Serializable {
     private String name
     private Map<String, Object> trigger
     private String script
+    private String template
     private Map<String, Object> options
     private String description
     private Map<String, Object> variables
@@ -17,6 +18,7 @@ class Yaml implements Serializable {
         this.group = "*"
         this.trigger = new HashMap<>()
         this.script = ""
+        this.template = ""
         this.description = "no description found"
         this.variables = new HashMap<>()
         this.options = ["autosave": false]
@@ -29,6 +31,14 @@ class Yaml implements Serializable {
 
     void setName(String name) {
         this.name = name
+    }
+
+    String getTemplate() {
+        return template
+    }
+
+    void setTemplate(String template) {
+        this.template = template
     }
 
     String getGroup() {

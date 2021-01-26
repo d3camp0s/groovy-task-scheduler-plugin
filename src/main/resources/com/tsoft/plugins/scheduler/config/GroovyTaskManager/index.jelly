@@ -48,13 +48,14 @@
                 </d:tag>
 
                 <d:tag name="gbtn">
-                    <span id="${id}" class="yui-button yui-push-button">
+                    <span id="${id}" class="yui-button yui-push-button ${hide==true? 'hide' : ''}">
                         <span class="first-child">
                             <input type="button" name="${name}" value="${value}" />
                         </span>
                     </span>
                     <input type="hidden" id="${id}_${name}" value="" />
                 </d:tag>
+
             </d:taglib>
 
             <f:section title="Groovy Tasks Scheduler Plugin">
@@ -130,14 +131,15 @@
                             <td style="max-width: 60%">
                                 <div class="parent-wrapper">
                                     <div class="parent">
-                                      <div class="child">
-                                        <local:gbtn id="run_script" name="runbtn" value="Ejecutar" />
+                                      <div class="child" style="display: inherit;">
+                                          <div><local:gbtn id="run_script" name="runbtn" value="Ejecutar"/></div>
+                                          <div><local:gbtn id="open_template" name="openbtn" value="Abrir" hide="true" /></div>
                                       </div>
                                       <div class="child">
-                                        <local:gbtn id="log_script" name="logbtn" value="Ver Log" />
+                                          <local:gbtn id="log_script" name="logbtn" value="Ver Log" />
                                       </div>
                                       <div class="child">
-                                        <local:gbtn id="save_script" name="savebtn" value="Guardar" />
+                                          <local:gbtn id="save_script" name="savebtn" value="Guardar" />
                                       </div>
                                     </div>
                                   </div>
@@ -180,6 +182,7 @@
               // Nuevos 3 botones
               var btnrun = jQuery3('#run_script_runbtn')[0];
               var btnlog = jQuery3('#log_script_logbtn')[0];
+              var btnopen = jQuery3('#open_template_openbtn')[0];
 
               if(!rows[0]){
                   console.log("No se encontraron filas en tabla");
@@ -188,9 +191,12 @@
                       if(row.target.classList.contains('slc')){
                           rows.removeClass('highlighted');
                           row.currentTarget.toggleClassName('highlighted');
+
                           // Asigna id a btns
                           btnrun.value = row.currentTarget.getAttribute("name");
                           btnlog.value = row.currentTarget.getAttribute("name");
+                          btnopen.value = row.currentTarget.getAttribute("name");
+                          let btnopentemplate = jQuery3('#open_template');
 
                           // carga async de archivos
                           FormChecker.sendRequest("${descriptorPath}/getScriptPreview?value="+encodeURIComponent(row.currentTarget.getAttribute("name")), {
@@ -200,6 +206,16 @@
                                       yamlTextArea.setValue(rsp.responseJSON.yaml)
                                       scriptTextArea.setValue(rsp.responseJSON.script)
                                       scriptid.val(rsp.responseJSON.id);
+
+                                      if( rsp.responseJSON.hasTemplate == true ){
+                                         btnopentemplate.removeClass('hide');
+                                         btnopentemplate.addClass('show');
+                                      }
+                                      else {
+                                         btnopentemplate.removeClass('show');
+                                         btnopentemplate.addClass('hide');
+                                      }
+
                                       if(rsp.responseJSON.error!="0") {
                                          jQuery3('#error_msg').text(rsp.responseJSON.error);
                                          jQuery3('#notificacion').removeClass('hide');

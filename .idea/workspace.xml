@@ -4,6 +4,15 @@
     <list default="true" id="e1be2745-d7fd-4d64-afed-df3caf4fe07f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/groovy/com/tsoft/plugins/scheduler/config/GroovyTaskManager.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/groovy/com/tsoft/plugins/scheduler/config/GroovyTaskManager.groovy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/groovy/com/tsoft/plugins/scheduler/config/GroovyTaskPoolTrigger.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/groovy/com/tsoft/plugins/scheduler/config/GroovyTaskPoolTrigger.groovy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/groovy/com/tsoft/plugins/scheduler/models/GroovyScript.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/groovy/com/tsoft/plugins/scheduler/models/GroovyScript.groovy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/groovy/com/tsoft/plugins/scheduler/models/Task.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/groovy/com/tsoft/plugins/scheduler/models/Task.groovy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/groovy/com/tsoft/plugins/scheduler/models/Yaml.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/groovy/com/tsoft/plugins/scheduler/models/Yaml.groovy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/groovy/com/tsoft/plugins/scheduler/utils/RESTClient.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/groovy/com/tsoft/plugins/scheduler/utils/RESTClient.groovy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/tsoft/plugins/scheduler/config/GroovyTaskManager/index.jelly" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/tsoft/plugins/scheduler/config/GroovyTaskManager/index.jelly" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/js/create_task_dialogs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/js/create_task_dialogs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/groovy/com/tsoft/plugins/scheduler/config/GroovyTaskManagerTest.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/groovy/com/tsoft/plugins/scheduler/config/GroovyTaskManagerTest.groovy" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -115,13 +124,33 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Gradle.groovy-task-scheduler-plugin [build]">
-    <configuration name="GroovyTaskManagerTest.testJsonTasks" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+  <component name="RunManager" selected="Gradle.groovy-task-scheduler-plugin [server]">
+    <configuration name="GroovyTaskManagerTest.testEscapeHtml" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="--tests &quot;com.tsoft.plugins.scheduler.config.GroovyTaskManagerTest.testJsonTasks&quot;" />
+        <option name="scriptParameters" value="--tests &quot;com.tsoft.plugins.scheduler.config.GroovyTaskManagerTest.testEscapeHtml&quot;" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":cleanTest" />
+            <option value=":test" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>false</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="GroovyTaskManagerTest.testInject" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="--tests &quot;com.tsoft.plugins.scheduler.config.GroovyTaskManagerTest.testInject&quot;" />
         <option name="taskDescriptions">
           <list />
         </option>
@@ -193,32 +222,13 @@
       <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="groovy-task-scheduler-plugin [testClasses]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="testClasses" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
-      <method v="2" />
-    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.groovy-task-scheduler-plugin [clean]" />
-        <item itemvalue="Gradle.groovy-task-scheduler-plugin [testClasses]" />
-        <item itemvalue="Gradle.GroovyTaskManagerTest.testJsonTasks" />
+        <item itemvalue="Gradle.GroovyTaskManagerTest.testInject" />
         <item itemvalue="Gradle.groovy-task-scheduler-plugin [build]" />
         <item itemvalue="Gradle.groovy-task-scheduler-plugin [server]" />
+        <item itemvalue="Gradle.GroovyTaskManagerTest.testEscapeHtml" />
+        <item itemvalue="Gradle.groovy-task-scheduler-plugin [clean]" />
       </list>
     </recent_temporary>
   </component>
@@ -234,6 +244,9 @@
       <updated>1588997985343</updated>
     </task>
     <servers />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.template" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">

@@ -17,6 +17,16 @@ class GroovyTaskPoolTrigger implements Closeable {
     private static Map<String, ScheduledFuture> scheduledTasks
 
     static {
+        _createTaskPoolTrigger()
+    }
+
+    protected static void _createTaskPoolTrigger(){
+
+        //stop first
+        stopTaskPool()
+        stopTaskExecutor()
+
+
         poolTaskScheduler = new ThreadPoolTaskScheduler()
         poolTaskScheduler.setPoolSize(Consts.MAX_POOL_SIZE)
         poolTaskScheduler.setThreadNamePrefix("groovy-task-scheduler-")
@@ -30,9 +40,9 @@ class GroovyTaskPoolTrigger implements Closeable {
         scheduledTasks = new ConcurrentHashMap<>()
     }
 
-    static boolean stopTaskPool(){
+    protected static boolean stopTaskPool(){
         try {
-            if (poolTaskScheduler.waitForTasksToCompleteOnShutdown) {
+            if (poolTaskScheduler!=null && poolTaskScheduler.waitForTasksToCompleteOnShutdown) {
                 poolTaskScheduler.getScheduledExecutor().shutdown()
                 return true
             }
@@ -42,9 +52,9 @@ class GroovyTaskPoolTrigger implements Closeable {
         }
     }
 
-    static boolean stopTaskExecutor(){
+    protected static boolean stopTaskExecutor(){
         try {
-            if (taskExecutor.waitForTasksToCompleteOnShutdown) {
+            if (taskExecutor!=null && taskExecutor.waitForTasksToCompleteOnShutdown) {
                 taskExecutor.shutdown()
                 return true
             }

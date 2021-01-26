@@ -78,7 +78,7 @@ YAHOO.taskManager.runTask = function(baseUrl){
 YAHOO.taskManager.runTask.prototype  = {
 	execute : function(id) {
 		// Initialize the temporary Panel to display while waiting for external content to load
-		var waitPanel = createPanelIfNotExist("wait", {
+		let waitPanel = createPanelIfNotExist("wait", {
                 fixedcenter: true,
                 close: true,
                 draggable: false,
@@ -104,6 +104,89 @@ YAHOO.taskManager.runTask.prototype  = {
                   YAHOO.taskManager.error(id,rsp.responseText);
               }
               waitPanel.hide();
+              layoutUpdateCallback.call();
+            }
+        });
+	},
+	openTemplate : function(id){
+	    FormChecker.sendRequest(`${descriptorPath}/loadTemplate?id=${encodeURIComponent(id)}`, {
+            method : "post",
+            onComplete : function(rsp) {
+              if(rsp.status==200){
+                  let panelTemplate
+                  if( taskpanels['panelTemplate']!=null ){
+                      panelTemplate = taskpanels['panelTemplate'];
+                  }
+                  else {
+                      panelTemplate = new YAHOO.widget.Dialog("panelTemplate", {
+                          width: "650px",
+                          height: "300px",
+                          effect:{
+                              effect: YAHOO.widget.ContainerEffect.FADE,
+                              duration: 0.15
+                          },
+                          fixedcenter: true,
+                          modal: true,
+                          visible: true,
+                          draggable: true,
+                          closable: true
+                      });
+
+                      taskpanels[panelTemplate.id] = panelTemplate;
+                  }
+
+                  let myButtons = [
+                        { text: "Ejecutar", handler: function() {
+                              let params = "";
+                              jQuery3("#run_task_fromPanel_form :input").each(function(){
+                                  let input = jQuery3(this); // This is the jquery object of the input, do what you will
+                                  params += input[0].id +"=";
+                                  params += encodeURIComponent(input[0].value) + "&";
+                              });
+
+                              params += `id=${id}`;
+
+                              FormChecker.sendRequest(`${descriptorPath}/executeFromPanel?${params}`, {
+                                  method : "post",
+                                  onComplete : function(rsp) {
+                                    if(rsp.status==200){
+                                        notificationBar.show("SUCCESS", notificationBar.OK);
+                                    }
+                                    else {
+                                        notificationBar.show(rsp.responseText, notificationBar.ERROR);
+                                    }
+                                    panelTemplate.hide();
+                                    layoutUpdateCallback.call();
+                                  }
+                              });
+
+                          }, isDefault: true
+                        },
+                        { text: "Cancelar", handler: function() { panelTemplate.hide(); } }
+                  ];
+
+                  panelTemplate.cfg.queueProperty("buttons", myButtons);
+                  panelTemplate.setHeader(`Template: ${id}`);
+                  panelTemplate.setBody(`<!DOCTYPE html>
+                                          <html lang="en">
+                                          <head>
+                                              <meta charset="UTF-8">
+                                              <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                                              <title>Jenkins Panel</title>
+                                              <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+                                          </head>
+                                          <body>
+                                              <!-- aca va el contenido del panel -->
+                                              <form id='run_task_fromPanel_form'>${rsp.responseText}</form>
+                                          </body>
+                                          </html>`);
+                  panelTemplate.render(document.body);
+                  panelTemplate.show();
+              }
+              else{
+                  console.log(rsp.responseText);
+                  YAHOO.taskManager.error(id,rsp.responseText);
+              }
               layoutUpdateCallback.call();
             }
         });
@@ -156,11 +239,12 @@ YAHOO.taskManager.error = function(id,message){
         close: true,
         width: 300,
         height: 400,
-        body: '<pre>'+message+'</pre>'
+        body: ''
     });
 
     // Show the Panel
     error.setHeader("Error:");
+    error.setBody('<pre>'+message+'</pre>');
     error.show();
 }
 
@@ -175,7 +259,7 @@ YAHOO.util.Event.onDOMReady(function(){
 
     var addbtn = new YAHOO.widget.Button("add_script", { label:"Add" });
     addbtn.on("click", function(){
-        var addNewPanel = createPanelIfNotExist;
+        var addNewPanel
         if( taskpanels['addNew']!=null ){
             addNewPanel = taskpanels['addNew'];
         }
@@ -231,11 +315,19 @@ YAHOO.util.Event.onDOMReady(function(){
         addNewPanel.show();
     });
 
+    var openbtn = new YAHOO.widget.Button("open_template", { label:"Open" });
+    openbtn.on("click", function(){
+        let id = YAHOO.util.Dom.get('open_template_openbtn').value;
+        if(id!=''){ YAHOO.taskManager.task.openTemplate(id); }
+        else { console.log('No se define propiedad value para open_template btn'); }
+    });
+
     var runbtn = new YAHOO.widget.Button("run_script", { label:"Run" });
     runbtn.on("click", function(){
         let id = YAHOO.util.Dom.get('run_script_runbtn').value;
         if(id!=''){ YAHOO.taskManager.task.execute(id); }
     });
+
 
     var logbtn = new YAHOO.widget.Button("log_script", { label:"Log" });
     logbtn.on("click", function(){

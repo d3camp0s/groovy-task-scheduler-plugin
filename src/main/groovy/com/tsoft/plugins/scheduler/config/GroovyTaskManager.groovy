@@ -161,6 +161,44 @@ class GroovyTaskManager extends ManagementLink implements StaplerProxy, Describa
 
         @RequirePOST
         @Restricted(NoExternalUse.class)
+        void doLoadTemplate(StaplerRequest req, StaplerResponse rsp) throws IOException {
+            try {
+                Jenkins.get().checkPermission(Jenkins.ADMINISTER)
+                req.setCharacterEncoding("UTF-8")
+                rsp.setContentType("application/text")
+
+                String value = req.getParameter("id")
+                if(value==null) {
+                    rsp.setStatus(404)
+                    rsp.getWriter().println("id can not be empty!")
+                }
+                else {
+                    GroovyScript sp = GroovyTaskManager.get().getYmlGScripts().find { it.id==Double.parseDouble(value) }
+                    if( sp!=null && sp.ymld.template!='') {
+                        File template = new File(Consts.ROOT_SCRIPTS_DIR, sp.folder.name + "/" + sp.ymld.template)
+                        if (template.exists()){
+                            rsp.setStatus(200)
+                            rsp.getWriter().println(template.getText("utf-8"))
+                        }
+                        else {
+                            rsp.setStatus(404)
+                            rsp.getWriter().println("Error al cargar el template: Not FOUND!")
+                        }
+                    }
+                    else {
+                        rsp.setStatus(400)
+                        rsp.getWriter().println("Error al cargar el template del script, variable ymld.template no puede estar vacio.")
+                    }
+                }
+            }
+            catch (Exception e){
+                rsp.setStatus(500)
+                rsp.getWriter().println(e.toString())
+            }
+        }
+
+        @RequirePOST
+        @Restricted(NoExternalUse.class)
         void doGetLog(StaplerRequest req, StaplerResponse rsp) throws IOException {
             def output = [:]
             try {
@@ -238,6 +276,81 @@ class GroovyTaskManager extends ManagementLink implements StaplerProxy, Describa
                                     // Se ejecuta el script en un hilo actual
                                     def latch = new CountDownLatch(1)
                                     def task = new Task(sp).setLatch(latch)
+                                    TaskMonitor.add(task)
+                                    task.run()
+
+                                    // TODO: Sera necesario el latch para esperar al hilo responder?
+                                    if ( latch.await(Consts.TASK_MAX_WAIT_TIME_SECONDS, TimeUnit.SECONDS) ) {
+                                        log.info("Task: '${sp.name}' done successfully")
+                                    }
+                                    else {
+                                        log.severe("Gave up waiting for tasks to finish running")
+                                    }
+
+                                    task.finalize()
+                                    // Se registra el evento anterior
+                                    ScriptHelper.registerTimerOrEvent(sp)
+
+                                    rsp.setStatus(200)
+                                    rsp.getWriter().println("Ejecucion de script: " + sp.getName() + " encolada")
+                                } else {
+                                    rsp.setStatus(403)
+                                    rsp.getWriter().println("Script desactivado no permite la ejecucion manual.")
+                                }
+                            } else {
+                                rsp.setStatus(403)
+                                rsp.getWriter().println("Script debe ser configurado como 'manual:true' para permitir ejecucion manual.")
+                            }
+                        } else {
+                            rsp.setStatus(404)
+                            rsp.getWriter().println("Script no encontrado!")
+                        }
+                    }
+                }
+                catch (Exception e) {
+                    log.severe(e.toString())
+                    rsp.setStatus(500)
+                    rsp.getWriter().println(e.toString())
+                }
+            }
+        }
+
+        @RequirePOST
+        @Restricted(NoExternalUse.class)
+        void doExecuteFromPanel(StaplerRequest req, StaplerResponse rsp) throws IOException {
+            synchronized (this) {
+                try {
+                    Jenkins.get().checkPermission(Jenkins.ADMINISTER)
+                    req.setCharacterEncoding("UTF-8")
+                    rsp.setContentType("application/text")
+
+                    String id = req.getParameter("id")
+
+                    if (id == null || req.getParameterMap().size()==0) {
+                        rsp.setStatus(500)
+                        rsp.getWriter().println("Form inputs cannot be empty!")
+                    } else {
+                        GroovyScript sp = GroovyTaskManager.get().getYmlGScripts().find {
+                            it.id == Double.parseDouble(id)
+                        }
+                        if (sp != null) {
+                            if (sp.triggerSpec == 'manual') {
+                                if (sp.isScriptActive()) {
+
+                                    // genera map de parametros
+                                    def params = req.getParameterMap().inject([:]){ map, it ->
+                                        map[it.key] = it.value[0]
+                                        map
+                                    }
+
+                                    // Se debe cancelar la ejecucion anterior en curso
+                                    if (sp.trigger != null) {
+                                        sp.trigger.cancel(true)
+                                    }
+
+                                    // Se ejecuta el script en un hilo actual
+                                    def latch = new CountDownLatch(1)
+                                    def task = new Task(sp, params, true).setLatch(latch)
                                     TaskMonitor.add(task)
                                     task.run()
 

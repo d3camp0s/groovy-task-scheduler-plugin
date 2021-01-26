@@ -6,7 +6,13 @@ import com.tsoft.plugins.scheduler.TaskMonitor
 import com.tsoft.plugins.scheduler.models.GroovyScript
 import com.tsoft.plugins.scheduler.models.Task
 import com.tsoft.plugins.scheduler.models.Yaml
+import com.tsoft.plugins.scheduler.utils.Consts
 import groovy.json.JsonOutput
+import org.apache.commons.jexl.Expression
+import org.apache.commons.jexl.ExpressionFactory
+import org.apache.commons.jexl.JexlContext
+import org.apache.commons.jexl.JexlHelper
+import org.apache.commons.lang.StringEscapeUtils
 import org.apache.commons.lang.time.DateFormatUtils
 
 import java.util.concurrent.CountDownLatch
@@ -65,6 +71,18 @@ class GroovyTaskManagerTest extends GroovyTestCase {
         TaskMonitor.add(task1)
 
         println(JsonOutput.toJson(TaskMonitor.getTaskList()))
+    }
+
+
+    void testInject(){
+
+        def mapInicial = [item1: 1, item2: 2, item3: 3]
+        def map = mapInicial.inject([:]) { params, it ->
+            params[it.key] = it.value*2
+            params
+        }
+        println map
+
     }
 
 }

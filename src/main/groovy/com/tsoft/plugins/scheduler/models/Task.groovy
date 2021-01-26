@@ -11,12 +11,21 @@ class Task implements Runnable, Serializable {
     private static final long serialVersionUID = 1L
     private GroovyScript script
     private HashMap<String, Object> inputs
+    private HashMap<String, Object> panelParams
     private CountDownLatch latch = null
     private current_date = ""
     private boolean requireContext = true
+    private boolean excefromPanel = false
 
     Task(GroovyScript scp) {
         this(scp, new HashMap<>())
+    }
+
+    Task(GroovyScript scp, HashMap params, boolean excefromPanel) {
+        this.script = scp
+        this.inputs = params
+        this.excefromPanel = excefromPanel
+        this.panelParams = excefromPanel? params : [:]
     }
 
     Task(GroovyScript scp, HashMap params) {
@@ -46,9 +55,11 @@ class Task implements Runnable, Serializable {
             if (isRequireContext())
                 configureContext(bout, berr, tmpDir)
 
-            // fetch variables from de yaml config file
-            def variables = script.getYmld().variables != null ? script.getYmld().variables : [:]
-            inputs.putAll(variables)                     // variables del yml de configuracion del script
+            // fetch variables from de yaml config file // variables del yml de configuracion del script
+            if(!excefromPanel) {
+                def variables = script.getYmld().variables != null ? script.getYmld().variables : [:]
+                inputs.putAll(variables)
+            }
 
             // Se añaden al contexto las variables de las credenciales informadas
             def credentials = script.getYmld().credentials
@@ -112,6 +123,7 @@ class Task implements Runnable, Serializable {
         inputs.put("out", bout)
         inputs.put("err", berr)
         inputs.put("yml", script.getYmld())         // Objeto yml de configuracion
+        inputs.put("_folder", new File(Consts.ROOT_SCRIPTS_DIR, script.folder.name))
 
         def jobDsl = new JobDsl(inputs)
         def gitClient = new GitClient(inputs)
